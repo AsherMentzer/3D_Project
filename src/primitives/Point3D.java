@@ -17,7 +17,7 @@ public final class Point3D {
  /**
   * final static for the origin point
   */
- static final Point3D ZERO=new Point3D(0,0,0);
+public static final Point3D ZERO=new Point3D(0,0,0);
  
  /**
   * constructor with 3 coordinates
@@ -51,8 +51,8 @@ public Point3D(double x,double y,double z){
  * @return new point3d
  */
 public Point3D add(Vector v) {
-	return new Point3D(new Coordinate(this.x.coord+v.head.x.coord),
-			new Coordinate(this.y.coord+v.head.y.coord),new Coordinate(this.z.coord+v.head.z.coord));
+	return new Point3D(new Coordinate(this.x.coord+v.getHead().x.coord),
+			new Coordinate(this.y.coord+v.getHead().y.coord),new Coordinate(this.z.coord+v.getHead().z.coord));
 }
 
 /**
@@ -61,7 +61,7 @@ public Point3D add(Vector v) {
  * @return the vector
  */
 public Vector subtract(Point3D p2){
-	return new Vector(p2.x-this.x,p2.y-this.y,p2.z-this.z);
+	return new Vector(this.x.coord-p2.x.coord,this.y.coord-p2.y.coord,this.z.coord-p2.z.coord);
 }
 
 /**

@@ -7,7 +7,7 @@ import static primitives.Util.*;
  * coordinate system. The class is based on Util controlling the accuracy.
 <<<<<<< HEAD
  * 
- * @author Ashrt mentzetr 
+ * @author Asher Mentzer & Mendy Kahana  
  * @version 5780B updated according to new requirements
 =======
 >>>>>>> branch 'master' of https://github.com/AsherMentzer/3D_Project.git

@@ -1,13 +1,14 @@
 package geometries;
 
-<<<<<<< HEAD
-public interface Geometry {
-=======
 import primitives.Vector;
 import primitives.Point3D;
+
+/**
+ * interface for all the  shapes
+ * with Func to return the normal to this shape 
+ * @author Asher Mentzer & Mendy Kahana
+ *
+ */
 public interface Geometry {
 	public Vector getNormal(Point3D p);
-	
->>>>>>> branch 'master' of https://github.com/AsherMentzer/3D_Project.git
-
 }

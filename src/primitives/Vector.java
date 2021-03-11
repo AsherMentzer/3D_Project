@@ -3,12 +3,12 @@ package primitives;
 import static primitives.Point3D.ZERO;
 
 /**
- * class for represnting a vector that have the point3D for the head
+ * class for representing a vector that have the point3D for the head
  * and the vector is from the origin to this point
  */
 public class Vector {
 
-	Point3D head;
+private	Point3D head;
 	
 	/**
 	 * constructor with 3 coordinates
@@ -47,6 +47,11 @@ public class Vector {
 		if(head.equals(Point3D.ZERO))/*---------------------- */
 			throw new IllegalArgumentException("the vector can't be the ZERO vector");
 		this.head = head;
+	}
+
+	
+	public Point3D getHead() {
+		return head;
 	}
 
 	/**

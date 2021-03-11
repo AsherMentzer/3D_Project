@@ -1,3 +1,5 @@
+
+
 import primitives.*;
 import static java.lang.System.out;
 import static primitives.Util.*;
@@ -7,7 +9,7 @@ import static primitives.Util.*;
  *
  * @author Dan Zilberstein
  */
-public final class Main {
+public final class Main2 {
 
     /**
      * Main program to tests initial functionality of the 1st stage
