@@ -51,8 +51,9 @@ public Point3D(double x,double y,double z){
  * @return new point3d
  */
 public Point3D add(Vector v) {
-	return new Point3D(new Coordinate(this.x.coord+v.getHead().x.coord),
-			new Coordinate(this.y.coord+v.getHead().y.coord),new Coordinate(this.z.coord+v.getHead().z.coord));
+	Point3D head=v.getHead();
+	return new Point3D(new Coordinate(this.x.coord+head.x.coord),
+			new Coordinate(this.y.coord+head.y.coord),new Coordinate(this.z.coord+head.z.coord));
 }
 
 /**

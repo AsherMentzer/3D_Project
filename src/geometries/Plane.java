@@ -37,7 +37,9 @@ public class Plane implements Geometry {
 	public Plane(Point3D p0, Point3D p1,Point3D p2) {
 		super();
 		this.p0 = p0;/** Associated point in which the plane lays*/
-		this.normal = null;
+		Vector v1=p1.subtract(p0);
+		Vector v2=p2.subtract(p0);		
+		this.normal = v1.crossProduct(v2).normalize();
 	}
 
 	/**
@@ -53,7 +55,7 @@ public class Plane implements Geometry {
 	 * @return the normal vector
 	 */
 	public Vector getNormal() {
-		return normal;
+		return this.normal;
 	}
 
 	@Override
@@ -61,10 +63,9 @@ public class Plane implements Geometry {
 		return "Plane [p0=" + p0 + ", normal=" + normal + "]";
 	}
 
-
 	public Vector getNormal(Point3D p) {
 		// TODO Auto-generated method stub
-		return null;
+		return this.normal;
 	}
-
+	
 }

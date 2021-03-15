@@ -78,9 +78,12 @@ private	Point3D head;
 	 * @param d the number to scale the vector
 	 * @return the new vector of the result
 	 */
-	public Vector scale(double d) {
-		return new Vector(this.head.x.coord*d,
-				this.head.y.coord*d,this.head.z.coord*d);
+	public Vector scale(double scale) {
+		if(scale==0.0)
+			throw new IllegalArgumentException("the vector can't be the ZERO vector");
+		
+		return new Vector(this.head.x.coord*scale,
+				this.head.y.coord*scale,this.head.z.coord*scale);
 	}
 	
 	/**
@@ -126,6 +129,8 @@ private	Point3D head;
 	 * @return our vector(after the change)
 	 */
 	public Vector normalize() {
+		if(length()==0)throw new ArithmeticException("no divide by zero");
+		
 	this.head= this.scale((1/length())).head; 
 	 return this;
 	}
@@ -135,7 +140,7 @@ private	Point3D head;
 	 * @return the normelized vector
 	 */
 	public Vector normalized() {
-		return new Vector(this.normalize().head);
+		return new Vector(head).normalize();
 	}
 	
 	@Override
