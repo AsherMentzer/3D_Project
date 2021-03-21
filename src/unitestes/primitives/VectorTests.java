@@ -3,7 +3,9 @@
  */
 package unitestes.primitives;
 
+import static java.lang.System.out;
 import static org.junit.Assert.*;
+import static primitives.Util.isZero;
 
 import org.junit.Test;
 
@@ -155,9 +157,11 @@ public class VectorTests {
 	@Test
 	public void testDotProduct() {
 		Vector v1 = new Vector(1, 2, 3);
-        Vector v2 = new Vector(0, 3, -2);
+        Vector v3 = new Vector(0, 3, -2);
+        Vector v2 = new Vector(-2, -4, -6);
 		 // ============ Equivalence Partitions Tests ==============     
-        assertEquals("dotProduct()wrong result", 0,v1.dotProduct(v2),0.00001);
+        assertEquals("dotProduct()wrong result", 0,v1.dotProduct(v3),0.00001);
+        assertEquals("dotProduct()wrong result", 0,v1.dotProduct(v2)+28,0.00001);
 	}
 
 	/**
@@ -179,16 +183,20 @@ public class VectorTests {
 		// ============ Equivalence Partitions Tests ==============
 		assertEquals("LengthSquared() wrong result", 5, v1.length(),0.00001);
 	}
-
+	
 	/**
 	 * Test method for {@link primitives.Vector#normalize()}.
 	 */
 	@Test
 	public void testNormalize() {
 		Vector v = new Vector(3.5,-5,10);
-		v.normalize();
-		assertEquals("", 1, v.length(),1e-10);
-		
+		Vector vCopy = new Vector(v.getHead());
+	    Vector vCopyNormalize = vCopy.normalize();
+	    assertEquals("ERROR: normalize() function creates a new vector", vCopy, vCopyNormalize);
+	    assertEquals("", 1, vCopyNormalize.length(),1e-10);
+	    Vector u = v.normalized();
+	    assertNotEquals("ERROR: normalizated() function does not create a new vector", u, v);
+	    
 		/*v = new Vector(0,0,0);
 		try {
 			v.normalize();

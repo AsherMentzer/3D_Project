@@ -37,8 +37,15 @@ public class Plane implements Geometry {
 	public Plane(Point3D p0, Point3D p1,Point3D p2) {
 		super();
 		this.p0 = p0;/** Associated point in which the plane lays*/
+		
 		Vector v1=p1.subtract(p0);
-		Vector v2=p2.subtract(p0);		
+		Vector v2=p2.subtract(p0);
+		if(v1.getHead()==Point3D.ZERO || v2.getHead()==Point3D.ZERO)
+			throw new IllegalArgumentException("the points are the same");
+	
+		if(v1.crossProduct(v2).getHead()==Point3D.ZERO)
+			throw new IllegalArgumentException("the points are on the same line");
+		
 		this.normal = v1.crossProduct(v2).normalize();
 	}
 
