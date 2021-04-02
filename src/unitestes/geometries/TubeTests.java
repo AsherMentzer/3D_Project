@@ -21,6 +21,6 @@ public class TubeTests {
 		Tube t=new Tube(new Ray(new Point3D(0,0,1),new Vector(0,0,1)),2);
 		assertEquals("get normal() wrong value",new Vector(0,1,0),t.getNormal(new Point3D(0,2,2)) );
 		//Boundary check
-		//assertEquals("get normal() wrong value",new Vector(0,1,0),t.getNormal(new Point3D(0,1,1)) );
+		assertEquals("get normal() wrong value",new Vector(0,1,0),t.getNormal(new Point3D(0,1,1)) );
 	}
 }

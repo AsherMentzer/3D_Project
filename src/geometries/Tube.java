@@ -1,4 +1,6 @@
 package geometries;
+import java.util.List;
+
 import primitives.*;
 
 /**
@@ -52,12 +54,14 @@ public class Tube implements Geometry {
 	public Vector getNormal(Point3D point) {
 
 		double t=axisRay.getDir().dotProduct(point.subtract(axisRay.getP0()));
-		/*try{
-			point.subtract(axisRay.getP0()).crossProduct(axisRay.getDir());//the point are parallel to the p0 point
-		}catch(IllegalArgumentException e) {
+		if(t==0)
 			return point.subtract(axisRay.getP0()).normalize();
-		}*/
+		
 		Point3D O=axisRay.getP0().add(axisRay.getDir().scale(t));
 		return point.subtract(O).normalize();
+	}
+	
+	public List<Point3D>findIntersections(Ray ray){
+		return null;
 	}
 }

@@ -1,5 +1,7 @@
 package geometries;
 
+import java.util.List;
+
 import primitives.*;
 
 /**
@@ -30,5 +32,7 @@ public class Triangle extends Polygon {
 		
 	}*/
 	
-	
+	public List<Point3D>findIntersections(Ray ray){
+		return null;
+	}
 }

@@ -15,7 +15,7 @@ public class Ray {
  * @param v the direction vector
  */
 	public Ray(Point3D p,Vector v){
-	/*check if the vector is normelized*/
+	//check if the vector is normalized
 		if(!(v.length()==1))
 			v=v.normalize();
 		p0=p;

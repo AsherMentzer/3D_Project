@@ -56,6 +56,18 @@ public Point3D add(Vector v) {
 			new Coordinate(this.y.coord+head.y.coord),new Coordinate(this.z.coord+head.z.coord));
 }
 
+public double getX() {
+	return x.coord;
+}
+
+public double getY() {
+	return y.coord;
+}
+
+public double getZ() {
+	return z.coord;
+}
+
 /**
  * func that return the vector that created by the point2- this point
  * @param p2 the second point3d
