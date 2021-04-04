@@ -4,9 +4,9 @@ import primitives.Vector;
 import primitives.Point3D;
 
 /**
- * interface for all the  shapes
- * with Func to return the normal to this shape
- * in specific point 
+ * interface for all the shapes with Func to return the normal to this shape in
+ * specific point
+ * 
  * @author Asher Mentzer & Mendy Kahana
  *
  */

@@ -81,8 +81,7 @@ public class Plane implements Geometry {
 	}
 
 	/**
-	 * implement the interface to find the normal to
-	 * this plane by specific point
+	 * implement the interface to find the normal to this plane by specific point
 	 */
 	public Vector getNormal(Point3D p) {
 		// TODO Auto-generated method stub
@@ -90,8 +89,8 @@ public class Plane implements Geometry {
 	}
 
 	/**
-	 * implement the interface to find all the intersections
-	 * between ray and this plane 
+	 * implement the interface to find all the intersections between ray and this
+	 * plane
 	 */
 	public List<Point3D> findIntersections(Ray ray) {
 		Vector v = ray.getDir();
@@ -107,9 +106,9 @@ public class Plane implements Geometry {
 			return null;
 		}
 		double t = Q0P0.dotProduct(normal) / nv;
-		if (t < 0 ||isZero(t))
+		if (t < 0 || isZero(t))
 			return null;
-		Point3D p=ray.getPoint(t);
+		Point3D p = ray.getPoint(t);
 		List<Point3D> l = new LinkedList<Point3D>();
 		l.add(p);
 		return l;

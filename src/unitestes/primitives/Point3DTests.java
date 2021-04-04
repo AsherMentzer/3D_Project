@@ -24,16 +24,14 @@ public class Point3DTests {
 	@Test
 	public void testDistanceSquared() {
 		double d = 36.0;
-		Point3D p=new Point3D(1,1,1);
-		assertEquals("wrong DistanceSquared value ", d,
-				p.distanceSquared(new Point3D(3,5,5)) ,0.00001);
+		Point3D p = new Point3D(1, 1, 1);
+		assertEquals("wrong DistanceSquared value ", d, p.distanceSquared(new Point3D(3, 5, 5)), 0.00001);
 	}
 
 	@Test
 	public void testDistance() {
 		double d = 6.0;
-		assertEquals("wrong DistanceSquared value ", d,
-				new Point3D(1,1,1).distance(new Point3D(3,5,5)) ,0.00001);
+		assertEquals("wrong DistanceSquared value ", d, new Point3D(1, 1, 1).distance(new Point3D(3, 5, 5)), 0.00001);
 	}
 
 }

@@ -60,8 +60,7 @@ public class Sphere implements Geometry {
 	}
 
 	/**
-	 * implement the interface to find the normal to
-	 * this sphere by specific point
+	 * implement the interface to find the normal to this sphere by specific point
 	 */
 	public Vector getNormal(Point3D point) {
 		return point.subtract(center).normalize();

@@ -1,11 +1,13 @@
 package geometries;
+
 import java.util.List;
 
 import primitives.*;
 
 /**
  * Tube class represents Tube in the 3D
- * @author 
+ * 
+ * @author
  *
  */
 public class Tube implements Geometry {
@@ -18,11 +20,12 @@ public class Tube implements Geometry {
 	 * the radius of the tube
 	 */
 	protected double radius;
-	
+
 	/**
 	 * constructor
+	 * 
 	 * @param axisRay the Ray
-	 * @param radius the radius
+	 * @param radius  the radius
 	 */
 	public Tube(Ray axisRay, double radius) {
 		super();
@@ -32,6 +35,7 @@ public class Tube implements Geometry {
 
 	/**
 	 * getter
+	 * 
 	 * @return the ray
 	 */
 	public Ray getAxisRay() {
@@ -40,6 +44,7 @@ public class Tube implements Geometry {
 
 	/**
 	 * getter
+	 * 
 	 * @return the radius
 	 */
 	public double getRadius() {
@@ -50,26 +55,25 @@ public class Tube implements Geometry {
 	public String toString() {
 		return "Tube [axisRay=" + axisRay + ", radius=" + radius + "]";
 	}
-	
+
 	/**
-	 * implement the interface to find the normal to
-	 * this Tube by specific point
+	 * implement the interface to find the normal to this Tube by specific point
 	 */
 	public Vector getNormal(Point3D point) {
 
-		double t=axisRay.getDir().dotProduct(point.subtract(axisRay.getP0()));
-		if(t==0)
+		double t = axisRay.getDir().dotProduct(point.subtract(axisRay.getP0()));
+		if (t == 0)
 			return point.subtract(axisRay.getP0()).normalize();
-		
-		Point3D O=axisRay.getP0().add(axisRay.getDir().scale(t));
+
+		Point3D O = axisRay.getP0().add(axisRay.getDir().scale(t));
 		return point.subtract(O).normalize();
 	}
-	
+
 	/**
-	 * implement the interface to find all the intersections
-	 * between ray and this tube 
+	 * implement the interface to find all the intersections between ray and this
+	 * tube
 	 */
-	public List<Point3D>findIntersections(Ray ray){
+	public List<Point3D> findIntersections(Ray ray) {
 		return null;
 	}
 }
