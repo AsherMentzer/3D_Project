@@ -84,7 +84,8 @@ public Vector subtract(Point3D p2){
  * @return the distance^2
  */
 public double distanceSquared(Point3D p) {
-	return((p.x.coord*p.x.coord)+(p.y.coord*p.y.coord)+(p.z.coord*p.z.coord));
+	return((p.x.coord-this.x.coord)*(p.x.coord-this.x.coord)+(p.y.coord-this.y.coord)*
+			(p.y.coord-this.y.coord)+(p.z.coord-this.z.coord)*(p.z.coord-this.z.coord));
 }
 
 /**

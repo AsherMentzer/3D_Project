@@ -59,20 +59,28 @@ public class Sphere implements Geometry {
 		return "Sphere [center=" + center + ", radius=" + radius + "]";
 	}
 
+	/**
+	 * implement the interface to find the normal to
+	 * this sphere by specific point
+	 */
 	public Vector getNormal(Point3D point) {
 		return point.subtract(center).normalize();
 	}
 
+	/**
+	 * implement the interface to find all the intersections
+	 * between ray and this sphere 
+	 */
 	public List<Point3D> findIntersections(Ray ray) {
 		Point3D p0 = ray.getP0();
 		Vector v = ray.getDir();
 		Vector u;
-		try {
+		try {//check if is not the same point /get vector zero
 			u = center.subtract(p0);
 
 			double Tm = alignZero(v.dotProduct(u));
 			double d = alignZero(Math.sqrt(u.lengthSquared() - Tm * Tm));
-			if (d >= radius)
+			if (d >= radius)//no intersections points
 				return null;
 			double Th = alignZero(Math.sqrt(radius * radius - d * d));
 			double t1 = Tm + Th;
@@ -80,22 +88,24 @@ public class Sphere implements Geometry {
 			Point3D p1;
 			Point3D p2;
 			List<Point3D> l = null;
+			
+			//check that any point exist else don't create list
 			if (t1 > 0 || t2 > 0) {
 				l = new LinkedList<Point3D>();
 
 				if (t1 > 0) {
-					p1 = p0.add(v.scale(t1));
+					p1 = ray.getPoint(t1);
 					l.add(p1);
 				}
 				if (t2 > 0) {
-					p2 = p0.add(v.scale(t2));
+					p2 = ray.getPoint(t2);
 					l.add(p2);
 				}
 			}
 			return l;
 		} catch (IllegalArgumentException e) {
 			List<Point3D> l = new LinkedList<Point3D>();
-			Point3D p1 = p0.add(v.scale(radius));
+			Point3D p1 =ray.getPoint(radius);
 			l.add(p1);
 			return l;
 		}

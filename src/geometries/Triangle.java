@@ -26,12 +26,14 @@ public class Triangle extends Polygon {
 		return "Triangle [vertices=" + vertices + ", plane=" + plane + "]";
 	}
 
-	/*public Triangle (Point3D p1,Point3D p2,Point3D p3) {
-		super(List<Point3D>vertices =List.of(p1,p2,p3););
-		List<Point3D>vertices =List.of(p1,p2,p3);
-		
-	}*/
+	public Triangle (Point3D p1,Point3D p2,Point3D p3) {
+		super(p1,p2,p3);
+	}
 	
+	/**
+	 * implement the interface to find all the intersections
+	 * between ray and this triangle 
+	 */
 	public List<Point3D>findIntersections(Ray ray){
 		return null;
 	}

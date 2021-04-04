@@ -51,6 +51,10 @@ public class Tube implements Geometry {
 		return "Tube [axisRay=" + axisRay + ", radius=" + radius + "]";
 	}
 	
+	/**
+	 * implement the interface to find the normal to
+	 * this Tube by specific point
+	 */
 	public Vector getNormal(Point3D point) {
 
 		double t=axisRay.getDir().dotProduct(point.subtract(axisRay.getP0()));
@@ -61,6 +65,10 @@ public class Tube implements Geometry {
 		return point.subtract(O).normalize();
 	}
 	
+	/**
+	 * implement the interface to find all the intersections
+	 * between ray and this tube 
+	 */
 	public List<Point3D>findIntersections(Ray ray){
 		return null;
 	}

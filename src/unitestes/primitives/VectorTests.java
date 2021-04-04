@@ -23,6 +23,7 @@ public class VectorTests {
 	 */
 	@Test
 	public void testVectorCoordinateCoordinateCoordinate() {
+		//TC01 the zero vector
 		Coordinate x=new Coordinate(0);
 		Coordinate y=new Coordinate(0);
 		Coordinate z=new Coordinate(0);
@@ -37,6 +38,7 @@ public class VectorTests {
 	 */
 	@Test
 	public void testVectorDoubleDoubleDouble() {
+		//TC02 the zero vector
 		double x=0;
 		double y=0;
 		double z=0;
@@ -51,6 +53,7 @@ public class VectorTests {
 	 */
 	@Test
 	public void testVectorPoint3D() {
+		//TC03 the zero vector
 		Point3D p=new Point3D(0,0,0);
 		try {
 			Vector v1=new Vector(p);
@@ -65,13 +68,14 @@ public class VectorTests {
 	public void testAdd() {
 		Vector v1 =new Vector(1,2,3);
 		// ============ Equivalence Partitions Tests ==============
+		//TC04 add 2 vectors
 		Vector v2 =new Vector(2,3,-1);
 		Vector v3 =new Vector(3,5,2);
 			
 		assertEquals("Vectro,add() wrong result", v3, v1.add(v2));
 		
 		  // =============== Boundary Values Tests ==================
-        // test zero vector from add vectors
+        //TC05 test zero vector from add vectors
 		Vector v4 =new Vector(-1,-2,-3);
 		try {
 			Vector vr=v1.add(v4);
@@ -89,11 +93,11 @@ public class VectorTests {
 		// ============ Equivalence Partitions Tests ==============
 		Vector v2 =new Vector(2,3,-1);
 		Vector v3 =new Vector(-1,-1,4);
-			
+		//TC06 subtract 2 vectors	
 		assertEquals("Subtract() wrong result", v3, v1.subtract(v2));
 		
 		  // =============== Boundary Values Tests ==================
-        // test zero vector from subtract vectors
+        //TC07 test zero vector from subtract vectors
 		Vector v4 =new Vector(1,2,3);
 		try {
 			Vector vr=v1.subtract(v4);
@@ -111,11 +115,11 @@ public class VectorTests {
 		// ============ Equivalence Partitions Tests ==============
 		double scale=2.1;
 		Vector v2 =new Vector(5.25,10.92,6.3);
-		
+		//TC08 scale vector with double
 		assertEquals("Subtract() wrong result", v2, v1.scale(scale));
 		
 		  // =============== Boundary Values Tests ==================
-        // test zero vector from subtract vectors
+        //TC09 test zero vector from subtract vectors
 		double scale2=0;
 		try {
 			Vector vr=v1.scale(scale2);
@@ -136,15 +140,15 @@ public class VectorTests {
         Vector v3 = new Vector(0, 3, -2);
         Vector vr = v1.crossProduct(v3);
         
-        // Test that length of cross-product is proper (orthogonal vectors taken for simplicity)
+        //TC10 Test that length of cross-product is proper (orthogonal vectors taken for simplicity)
         assertEquals("crossProduct() wrong result length", v1.length() * v3.length(), vr.length(), 0.00001);
         
-        // Test cross-product result orthogonality to its operands
+        //TC11 Test cross-product result orthogonality to its operands
         assertTrue("crossProduct() result is not orthogonal to 1st operand", Util.isZero(vr.dotProduct(v1)));
         assertTrue("crossProduct() result is not orthogonal to 2nd operand", Util.isZero(vr.dotProduct(v3)));
 
         // =============== Boundary Values Tests ==================
-        // test zero vector from cross-productof co-lined vectors
+        //TC12 test zero vector from cross-productof co-lined vectors
         try {
             v1.crossProduct(v2);
             fail("crossProduct() for parallel vectors does not throw an exception");

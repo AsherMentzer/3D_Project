@@ -1,5 +1,7 @@
 package geometries;
 
+import java.util.List;
+
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
@@ -40,6 +42,10 @@ public class Cylinder extends Tube implements Geometry {
 		return "Cylinder [height=" + height + ", axisRay=" + axisRay + ", radius=" + radius + "]";
 	}
 	
+	/**
+	 * implement the interface to find the normal to
+	 * this Cylinder by specific point
+	 */
 	public Vector getNormal(Point3D point) {
 		Vector v=point.subtract(axisRay.getP0());
 		/*try {
@@ -55,4 +61,14 @@ public class Cylinder extends Tube implements Geometry {
 		Point3D O=axisRay.getP0().add(axisRay.getDir().scale(t));
 		return point.subtract(O).normalize();
 	}
+
+	/**
+	 * implement the interface to find all the intersections
+	 * between ray and this Cylinder 
+	 */
+	public List<Point3D> findIntersections(Ray ray) {
+		// TODO Auto-generated method stub
+		return super.findIntersections(ray);
+	}
+	
 }

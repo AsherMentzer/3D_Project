@@ -38,6 +38,11 @@ public class Ray {
 		return dir;
 	}
 	
+	/**
+	 *function to get a point on the ray where v scale by t
+	 * @param t double to scale the direction vector
+	 * @return the point on the ray where v scale by t
+	 */
 	public Point3D getPoint(double t) {
 		return p0.add(dir.scale(t));
 	}
