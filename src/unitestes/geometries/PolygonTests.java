@@ -4,6 +4,9 @@
 package unitestes.geometries;
 
 import static org.junit.Assert.*;
+
+import java.util.List;
+
 import org.junit.Test;
 
 import geometries.*;
@@ -91,4 +94,36 @@ public class PolygonTests {
 		assertEquals("Bad normal to trinagle", new Vector(sqrt3, sqrt3, sqrt3), pl.getNormal(new Point3D(0, 0, 1)));
 	}
 
+	@Test
+	public void testFindIntersections() {
+		//square
+		Polygon square = new Polygon(new Point3D(0, 0, 0), new Point3D(2, 0, 0), 
+				new Point3D(2, 2, 0),new Point3D(0, 2, 0));
+		
+		// ============ Equivalence Partitions Tests ==============
+		// TC01 Inside square(1 point)
+		Point3D p1 = new Point3D(1, 1, 0);
+		List<Point3D> result = square.findIntersections(new Ray(new Point3D(0, 0, 1), 
+				new Vector(1, 1, -1)));
+		assertEquals("Wrong number of points", 1, result.size());
+		assertEquals("Ray crosses square", List.of(p1), result);
+
+		// TC02 Outside against edge(0 points)
+		assertNull("Outside against edge",
+				square.findIntersections(new Ray(new Point3D(0, 0, 1), new Vector(3, 3, -1))));
+
+		// TC03 Outside against vertex(0 points)
+		assertNull("Outside against vertex", square.findIntersections(new Ray(new Point3D(0, 0, 1), new Vector(1, 3, -1))));
+
+		// =============== Boundary Values Tests ==================
+
+		// TC04 On edge
+		assertNull("Outside against vertex", square.findIntersections(new Ray(new Point3D(0, 0, 1), new Vector(2, 0, -1))));
+
+		// TC05 In vertex
+		assertNull("Outside against vertex", square.findIntersections(new Ray(new Point3D(0, 0, 1), new Vector(1, 0, -1))));
+
+		// TC06 On edge's continuation
+		assertNull("Outside against vertex", square.findIntersections(new Ray(new Point3D(0, 0, 1), new Vector(3, 0, -1))));
+	}
 }
