@@ -107,37 +107,37 @@ public class Polygon implements Geometry {
 		if (l == null)
 			return null;
 
-		// list of all the vectors from the p0 of the ray
-		// to all the points of the edges of the polygon
-		List<Vector> vectors = new LinkedList<Vector>();
-		for (Point3D p : this.vertices) {
-			Vector v1 = p.subtract(p0);
-			vectors.add(v1);
-		}
-
-		// list of all the vectors that normals to each
-		// triangle that created from the vectors
+		/*create vectors from the p0 of the ray
+		 to all the points of the edges of the polygon
+		 list of all the vectors that normals to each
+		triangle that created from the vectors
+		 */ 
 		List<Vector> normals = new LinkedList<Vector>();
-		int size = vectors.size();
-		for (int i = 0; i < size - 1; i++) {
-			Vector n = vectors.get(i).crossProduct(vectors.get(i + 1));
+		List<Double> t = new ArrayList<Double>();
+		int size = this.vertices.size();
+		Vector v1;
+		v1= p0.subtract(vertices.get(0));
+		for (int i = 1; i < size ; i++) {			
+			Vector v2 = p0.subtract(vertices.get(i));
+			Vector n = v1.crossProduct(v2);
+			Double d = alignZero(v.dotProduct(n));
+			t.add(d);
+			v1=v2;
 			normals.add(n);
 		}
-		Vector n = vectors.get(size - 1).crossProduct(vectors.get(0));
+		
+		Vector v2 =p0.subtract(vertices.get(0));
+		Vector n = v1.crossProduct(v2);
 		normals.add(n);
-
+		Double d = alignZero(v.dotProduct(n));
+		t.add(d);
 		/*
 		 * list of double t of dot product between the vector v of the ray and each
 		 * normal vector we found if all the t doubles have the same sign so the point
 		 * is in the polygon else is out or if 1t is 0 is on vertices or if 2 are 0 is
 		 * in edge
 		 */
-		List<Double> t = new ArrayList<Double>();
-		for (Vector normal : normals) {
-			Double d = alignZero(v.dotProduct(normal));
-			t.add(d);
-		}
-
+		
 		double t1 = t.get(0);
 		if (isZero(t1))
 			return null;
