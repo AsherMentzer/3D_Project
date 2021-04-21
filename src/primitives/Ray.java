@@ -1,5 +1,10 @@
 package primitives;
 
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.function.Function;
+
 /**
  * base class to rpresent ray by Point and normal vector of the direction
  *
@@ -67,4 +72,26 @@ public class Ray {
 		return p0.equals(other.p0) && dir.equals(other.dir);
 	}
 
+	/**
+	 * get list of points and check witch is the closest point
+	 * 
+	 * @param points the list
+	 * @return the closest point
+	 */
+	public Point3D getClosestPoint(List<Point3D> points) {
+		if (points.isEmpty())
+			return null;
+		else {
+			Point3D point = points.get(0);
+			double distance = point.distance(p0);
+			for (var p : points) {
+				if (p.distance(p0) < distance) {
+					point = p;
+					distance = p.distance(p0);
+				}
+			}
+			return point;
+		}
+
+	}
 }
