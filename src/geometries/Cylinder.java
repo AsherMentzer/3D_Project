@@ -2,6 +2,7 @@ package geometries;
 
 import java.util.List;
 
+import geometries.Intersectable.GeoPoint;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
@@ -12,7 +13,7 @@ import primitives.Vector;
  * @author
  *
  */
-public class Cylinder extends Tube implements Geometry {
+public class Cylinder extends Tube {
 
 	/**
 	 * the height of the cylinder
@@ -63,13 +64,17 @@ public class Cylinder extends Tube implements Geometry {
 		return point.subtract(O).normalize();
 	}
 
+	/*
+	 * public List<Point3D> findIntersections(Ray ray) { 
+	 * method stub return super.findIntersections(ray); }
+	 */
+	
 	/**
 	 * implement the interface to find all the intersections between ray and this
 	 * Cylinder
 	 */
-	public List<Point3D> findIntersections(Ray ray) {
-		// TODO Auto-generated method stub
-		return super.findIntersections(ray);
+	@Override
+	public List<GeoPoint> findGeoIntersections(Ray ray) {
+		return super.findGeoIntersections(ray);
 	}
-
 }

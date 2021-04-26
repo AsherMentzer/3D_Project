@@ -1,15 +1,42 @@
 package geometries;
 
-import primitives.Vector;
-import primitives.Point3D;
+import primitives.*;
+
 
 /**
- * interface for all the shapes with Func to return the normal to this shape in
+ * abstract class for all the shapes with function to return the normal to this shape in
  * specific point
  * 
  * @author Asher Mentzer & Mendy Kahana
  *
  */
-public interface Geometry extends Intersectable {
-	public Vector getNormal(Point3D p);
+public abstract class Geometry implements Intersectable {
+	
+	protected Color emission=Color.BLACK;
+	
+	/**
+	 * getter function
+	 * @return the emission color
+	 */
+	public Color getEmission() {
+		return emission;
+	}
+
+	/**
+	 * setter function
+	 * @param emmission the emisssion color
+	 * @return
+	 */
+	public Geometry setEmission(Color emission) {
+		this.emission = emission;
+		return this;
+	}
+
+	/**
+	 * abstract function to get the normal to this 
+	 * shape in the giving point
+	 * @param p the point
+	 * @return the normal vector
+	 */
+	public abstract Vector getNormal(Point3D p);
 }

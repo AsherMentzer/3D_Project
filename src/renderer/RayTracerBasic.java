@@ -6,6 +6,7 @@ import primitives.Color;
 import primitives.Point3D;
 import primitives.Ray;
 import scene.Scene;
+import geometries.Intersectable.GeoPoint;
 
 /**
  * basic ray trace heir from the rayTraceBase class the class is to calculate
@@ -31,10 +32,10 @@ public class RayTracerBasic extends RayTracerBase {
 	 * get ray and return the color of the closest point that this ray intersect
 	 */
 	public Color traceRay(Ray ray) {
-		List<Point3D> intersections = scene.geometries.findIntersections(ray);
+		List<GeoPoint> intersections = scene.geometries.findGeoIntersections(ray);
 		if (intersections == null)
 			return scene.background;
-		Point3D closestPoint = ray.getClosestPoint(intersections);
+		GeoPoint closestPoint = ray.getClosestGeoPoint(intersections);
 		return calcColor(closestPoint);
 	}
 
@@ -44,7 +45,7 @@ public class RayTracerBasic extends RayTracerBase {
 	 * @param point
 	 * @return the result of this color
 	 */
-	private Color calcColor(Point3D point) {
-		return scene.ambientLight.getIntensity();
+	private Color calcColor(GeoPoint point) {
+		return scene.ambientLight.getIntensity().add(point.geometry.getEmission());
 	}
 }

@@ -15,7 +15,7 @@ import static primitives.Util.*;
  * @author Asher Mentzer & Mendy Kahana
  *
  */
-public class Plane implements Geometry {
+public class Plane extends Geometry {
 	/**
 	 * Associated point in which the plane lays
 	 */
@@ -88,10 +88,7 @@ public class Plane implements Geometry {
 		return this.normal;
 	}
 
-	/**
-	 * implement the interface to find all the intersections between ray and this
-	 * plane
-	 */
+	/*
 	public List<Point3D> findIntersections(Ray ray) {
 		Vector v = ray.getDir();
 		Point3D q0 = ray.getP0();
@@ -109,8 +106,34 @@ public class Plane implements Geometry {
 		if (t < 0 || isZero(t))
 			return null;
 		Point3D p = ray.getPoint(t);
-		List<Point3D> l = new LinkedList<Point3D>();
-		l.add(p);
-		return l;
+		//List<Point3D> l = new LinkedList<Point3D>();
+		//l.add(p);
+		return List.of(p);
+	}
+	*/
+	
+	/**
+	 * implement the interface to find all the intersections between ray and this
+	 * plane
+	 */
+	@Override
+	public List<GeoPoint> findGeoIntersections(Ray ray) {
+		Vector v = ray.getDir();
+		Point3D q0 = ray.getP0();
+		double nv = normal.dotProduct(v);
+		if (isZero(nv)) {
+			return null;
+		}
+		Vector Q0P0;
+		try {
+			Q0P0 = p0.subtract(q0);
+		} catch (Exception e) {
+			return null;
+		}
+		double t = Q0P0.dotProduct(normal) / nv;
+		if (t < 0 || isZero(t))
+			return null;
+		Point3D p = ray.getPoint(t);
+		return List.of(new GeoPoint(this,p));
 	}
 }

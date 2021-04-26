@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
-
+import geometries.Intersectable.GeoPoint;
 /**
  * base class to rpresent ray by Point and normal vector of the direction
  *
@@ -88,6 +88,23 @@ public class Ray {
 				if (p.distance(p0) < distance) {
 					point = p;
 					distance = p.distance(p0);
+				}
+			}
+			return point;
+		}
+
+	}
+	
+	public GeoPoint getClosestGeoPoint(List<GeoPoint> points) {
+		if (points.isEmpty())
+			return null;
+		else {
+			GeoPoint point = points.get(0);
+			double distance = point.point.distance(p0);
+			for (var p : points) {
+				if (p.point.distance(p0) < distance) {
+					point = p;
+					distance = p.point.distance(p0);
 				}
 			}
 			return point;

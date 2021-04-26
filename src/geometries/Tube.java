@@ -10,7 +10,7 @@ import primitives.*;
  * @author
  *
  */
-public class Tube implements Geometry {
+public class Tube extends Geometry {
 
 	/**
 	 * the Ray
@@ -69,11 +69,19 @@ public class Tube implements Geometry {
 		return point.subtract(O).normalize();
 	}
 
+	/*
+	public List<Point3D> findIntersections(Ray ray) {
+		return null;
+	}
+	*/
+	
 	/**
 	 * implement the interface to find all the intersections between ray and this
 	 * tube
 	 */
-	public List<Point3D> findIntersections(Ray ray) {
+	@Override
+	public List<GeoPoint> findGeoIntersections(Ray ray) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

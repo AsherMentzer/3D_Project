@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import geometries.Intersectable.GeoPoint;
 import primitives.Point3D;
 import primitives.Ray;
 
@@ -45,16 +46,14 @@ public class Geometries implements Intersectable {
 		this.intersections.addAll(newObjects);
 	}
 
-	/**
-	 * Function to find all the intersections between the ray to all the shapes
-	 */
+	/*
 	@Override
 	public List<Point3D> findIntersections(Ray ray) {
 		// TODO Auto-generated method stub
 		if (intersections.isEmpty())
 			return null;
 
-		List<Point3D> l = new LinkedList();
+		List<Point3D> l = new LinkedList<Point3D>();
 		for (Intersectable i : intersections) {
 			List<Point3D> points = i.findIntersections(ray);
 			if (points != null)
@@ -65,5 +64,26 @@ public class Geometries implements Intersectable {
 		else
 			return l;
 	}
-
+	*/
+	
+	/**
+	 * Function to find all the intersections between the ray to all the shapes
+	 */
+	@Override
+	public List<GeoPoint> findGeoIntersections(Ray ray) {
+		if (intersections.isEmpty())
+			return null;
+		
+		List<GeoPoint> l = new LinkedList<GeoPoint>();
+		for (Intersectable i : intersections) {
+			var geoIntersections = i.findGeoIntersections(ray);
+			if (geoIntersections != null)
+				l.addAll(geoIntersections);
+		}
+		if (l==null||l.isEmpty())
+			return null;
+		
+		
+			return l;
+	}
 }
