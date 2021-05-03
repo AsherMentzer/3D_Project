@@ -8,9 +8,7 @@ import primitives.Color;
  * @author
  *
  */
-public class AmbientLight {
-
-	private Color intensity;
+public class AmbientLight extends Light  {
 
 	/**
 	 * constructor get the color and the scale and keep the result in intensity
@@ -19,15 +17,15 @@ public class AmbientLight {
 	 * @param kA the scale
 	 */
 	public AmbientLight(Color iA, double kA) {
-		this.intensity = iA.scale(kA);
+		super(iA.scale(kA));
 	}
 
 	/**
 	 * getter
 	 * 
-	 * @return
+	 * @return the intensity color
 	 */
 	public Color getIntensity() {
-		return this.intensity;
+		return super.getIntensity();
 	}
 }
