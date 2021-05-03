@@ -92,66 +92,6 @@ public class Polygon extends Geometry {
 		return plane.getNormal();
 	}
 
-	/*
-	public List<Point3D> findIntersections(Ray ray) {
-		Point3D p0 = ray.getP0();
-		Vector v = ray.getDir();
-
-		// check if the point not intersect the plane
-		// of the polygon so for sure not intersect the polygon
-		List<Point3D> l = null;
-		l = this.plane.findIntersections(ray);
-		if (l == null)
-			return null;
-
-		//create vectors from the p0 of the ray
-		// to all the points of the edges of the polygon
-		// list of all the vectors that normals to each
-		//triangle that created from the vectors 
-		List<Vector> normals = new LinkedList<Vector>();
-		List<Double> t = new ArrayList<Double>();
-		int size = this.vertices.size();
-		Vector v1;
-		v1= p0.subtract(vertices.get(0));
-		for (int i = 1; i < size ; i++) {			
-			Vector v2 = p0.subtract(vertices.get(i));
-			Vector n = v1.crossProduct(v2);
-			Double d = alignZero(v.dotProduct(n));
-			t.add(d);
-			v1=v2;
-			normals.add(n);
-		}
-		
-		Vector v2 =p0.subtract(vertices.get(0));
-		Vector n = v1.crossProduct(v2);
-		normals.add(n);
-		Double d = alignZero(v.dotProduct(n));
-		t.add(d);
-		
-		 // list of double t of dot product between the vector v of the ray and each
-		 // normal vector we found if all the t doubles have the same sign so the point
-		 // is in the polygon else is out or if 1t is 0 is on vertices or if 2 are 0 is
-		 // in edge
-		double t1 = t.get(0);
-		if (isZero(t1))
-			return null;
-
-		if (t1 > 0) {
-			for (double d1 : t) {
-				if (d1 < 0 || isZero(d1))
-					return null;
-			}
-		} else if (t1 < 0) {
-			for (double d1 : t) {
-				if (d1 > 0 || isZero(d1))
-					return null;
-			}
-		}
-
-		return l;
-	}
-	*/
-	
 	/**
 	 * implement the interface to find all the intersections between ray and this
 	 * polygon
@@ -168,26 +108,26 @@ public class Polygon extends Geometry {
 		if (l == null)
 			return null;
 
-		/*create vectors from the p0 of the ray
-		 to all the points of the edges of the polygon
-		 list of all the vectors that normals to each
-		triangle that created from the vectors
-		 */ 
+		/*
+		 * create vectors from the p0 of the ray to all the points of the edges of the
+		 * polygon list of all the vectors that normals to each triangle that created
+		 * from the vectors
+		 */
 		List<Vector> normals = new LinkedList<Vector>();
 		List<Double> t = new ArrayList<Double>();
 		int size = this.vertices.size();
 		Vector v1;
-		v1= p0.subtract(vertices.get(0));
-		for (int i = 1; i < size ; i++) {			
+		v1 = p0.subtract(vertices.get(0));
+		for (int i = 1; i < size; i++) {
 			Vector v2 = p0.subtract(vertices.get(i));
 			Vector n = v1.crossProduct(v2);
 			Double d = alignZero(v.dotProduct(n));
 			t.add(d);
-			v1=v2;
+			v1 = v2;
 			normals.add(n);
 		}
-		
-		Vector v2 =p0.subtract(vertices.get(0));
+
+		Vector v2 = p0.subtract(vertices.get(0));
 		Vector n = v1.crossProduct(v2);
 		normals.add(n);
 		Double d = alignZero(v.dotProduct(n));
@@ -198,7 +138,7 @@ public class Polygon extends Geometry {
 		 * is in the polygon else is out or if 1t is 0 is on vertices or if 2 are 0 is
 		 * in edge
 		 */
-		
+
 		double t1 = t.get(0);
 		if (isZero(t1))
 			return null;
@@ -215,7 +155,7 @@ public class Polygon extends Geometry {
 			}
 		}
 
-		l.get(0).geometry=this;
+		l.get(0).geometry = this;
 		return l;
 	}
 }
