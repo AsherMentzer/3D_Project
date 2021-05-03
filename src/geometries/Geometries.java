@@ -46,25 +46,6 @@ public class Geometries implements Intersectable {
 		this.intersections.addAll(newObjects);
 	}
 
-	/*
-	@Override
-	public List<Point3D> findIntersections(Ray ray) {
-		// TODO Auto-generated method stub
-		if (intersections.isEmpty())
-			return null;
-
-		List<Point3D> l = new LinkedList<Point3D>();
-		for (Intersectable i : intersections) {
-			List<Point3D> points = i.findIntersections(ray);
-			if (points != null)
-				l.addAll(points);
-		}
-		if (l.isEmpty())
-			return null;
-		else
-			return l;
-	}
-	*/
 	
 	/**
 	 * Function to find all the intersections between the ray to all the shapes
