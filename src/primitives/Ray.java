@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
 import geometries.Intersectable.GeoPoint;
+
 /**
  * base class to rpresent ray by Point and normal vector of the direction
  *
@@ -73,7 +74,7 @@ public class Ray {
 	}
 
 	/**
-	 * get list of points and check witch is the closest point
+	 * get list of points and return the closest point
 	 * 
 	 * @param points the list
 	 * @return the closest point
@@ -94,7 +95,13 @@ public class Ray {
 		}
 
 	}
-	
+
+	/**
+	 * get list of GeoPoints and return the closest GeoPoint
+	 * 
+	 * @param points
+	 * @return the closest GeoPoint
+	 */
 	public GeoPoint getClosestGeoPoint(List<GeoPoint> points) {
 		if (points.isEmpty())
 			return null;

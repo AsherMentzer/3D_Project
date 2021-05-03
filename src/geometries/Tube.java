@@ -69,12 +69,6 @@ public class Tube extends Geometry {
 		return point.subtract(O).normalize();
 	}
 
-	/*
-	public List<Point3D> findIntersections(Ray ray) {
-		return null;
-	}
-	*/
-	
 	/**
 	 * implement the interface to find all the intersections between ray and this
 	 * tube

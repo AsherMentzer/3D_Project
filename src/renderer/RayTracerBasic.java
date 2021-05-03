@@ -53,6 +53,13 @@ public class RayTracerBasic extends RayTracerBase {
 		return scene.ambientLight.getIntensity().add(point.geometry.getEmission()).add(calcLocalEffects(point, ray));
 	}
 
+	/**
+	 * calculate all the local effects on the color
+	 * 
+	 * @param intersection
+	 * @param ray
+	 * @return the color
+	 */
 	private Color calcLocalEffects(GeoPoint intersection, Ray ray) {
 		Material material = intersection.geometry.getMaterial();
 		Vector v = ray.getDir();
@@ -68,23 +75,46 @@ public class RayTracerBasic extends RayTracerBase {
 			double nl = alignZero(n.dotProduct(l));
 			if (nl * nv > 0) { // sing(nl) == sign(nv)
 				Color lightIntensity = lightSource.getIntensity(intersection.point);
-				color = color.add(calcDiffusive(kd, l, n,nl,lightIntensity))
-				.add(calcSpecular(ks, l, n, v,nl ,nShininess, lightIntensity));
+				color = color.add(calcDiffusive(kd, l, n, nl, lightIntensity))
+						.add(calcSpecular(ks, l, n, v, nl, nShininess, lightIntensity));
 			}
 		}
 		return color;
 	}
 
-	private Color calcDiffusive(double kd, Vector l, Vector n,double nl ,Color lightIntensity) {
+	/**
+	 * calculate the diffuse effect on the color
+	 * 
+	 * @param kd             the parameter of the material diffuse
+	 * @param l              vector from the light to the point
+	 * @param n              the normal vector of the geometry
+	 * @param nl             dot product between n and l
+	 * @param lightIntensity the light color before the diffuse effect
+	 * @return the color after the diffuse effect
+	 */
+	private Color calcDiffusive(double kd, Vector l, Vector n, double nl, Color lightIntensity) {
 		return lightIntensity.scale(kd * (Math.abs(nl)));
 	}
 
-	private Color calcSpecular(double ks, Vector l, Vector n, Vector v,double nl ,double nShininess, Color lightIntensity) {
+	/**
+	 * calculate the specular effect on the color
+	 * 
+	 * @param ks             the parameter of the material specular
+	 * @param l              vector from the light to the point
+	 * @param n              the normal vector of the geometry
+	 * @param v              vector from camera to the point
+	 * @param nl             dot product between n and l
+	 * @param nShininess     the parameter of the material shininess
+	 * @param lightIntensity the light color before the specular effect
+	 * @return the color after the specular effect
+	 */
+	private Color calcSpecular(double ks, Vector l, Vector n, Vector v, double nl, double nShininess,
+			Color lightIntensity) {
 		Vector r = l.subtract(n.scale(2 * (nl))).normalize();
 		double vr = alignZero(v.scale(-1).dotProduct(r));
 		if (vr > 0)
 			return lightIntensity.scale(ks * Math.pow(vr, nShininess));
 		else
-			return lightIntensity.scale(ks*0);
+			return lightIntensity.scale(ks * 0);
 	}
 }
