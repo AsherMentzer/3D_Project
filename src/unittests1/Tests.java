@@ -66,7 +66,6 @@ public class Tests {
 		ImageWriter imageWriter = new ImageWriter("home", 500, 500);
 		Render render = new Render()//
 				.setImageWriter(imageWriter) //
-				.setScene(scene1) //
 				.setCamera(camera1) //
 				.setRayTracer(new RayTracerBasic(scene1));
 		render.renderImage();

@@ -97,7 +97,7 @@ public class Polygon extends Geometry {
 	 * polygon
 	 */
 	@Override
-	public List<GeoPoint> findGeoIntersections(Ray ray) {
+	public List<GeoPoint> findGeoIntersections(Ray ray,double maxDistance) {
 		Point3D p0 = ray.getP0();
 		Vector v = ray.getDir();
 
@@ -140,17 +140,17 @@ public class Polygon extends Geometry {
 		 */
 
 		double t1 = t.get(0);
-		if (isZero(t1))
+		if (isZero(t1)|| !(alignZero(t1-maxDistance) <= 0))
 			return null;
 
 		if (t1 > 0) {
 			for (double d1 : t) {
-				if (d1 < 0 || isZero(d1))
+				if (d1 < 0 || isZero(d1)|| !(alignZero(d1-maxDistance) <= 0))
 					return null;
 			}
 		} else if (t1 < 0) {
 			for (double d1 : t) {
-				if (d1 > 0 || isZero(d1))
+				if (d1 > 0 || isZero(d1)||!(alignZero(d1-maxDistance) <= 0))
 					return null;
 			}
 		}

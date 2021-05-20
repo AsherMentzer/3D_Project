@@ -20,7 +20,7 @@ public class Scene {
 
 	public String name;
 	public Color background = Color.BLACK;
-	public AmbientLight ambientLight;
+	public AmbientLight ambientLight=new AmbientLight();
 	public Geometries geometries;
 	public List<LightSource> lights= new LinkedList<LightSource>();
 	
@@ -32,7 +32,7 @@ public class Scene {
 	 */
 	public Scene(String name) {
 		this.name = name;
-		this.ambientLight=new AmbientLight(Color.BLACK,0);
+		//this.ambientLight=new AmbientLight(Color.BLACK,0);
 		geometries = new Geometries();
 	}
 

@@ -35,12 +35,12 @@ public class Triangle extends Polygon {
 	 * implement the interface to find all the intersections between ray and this
 	 * triangle
 	 */
-	public List<GeoPoint> findGeoIntersections(Ray ray) {
+	public List<GeoPoint> findGeoIntersections(Ray ray,double maxDistance) {
 		Point3D p0 = ray.getP0();
 		Vector v = ray.getDir();
 
 		List<GeoPoint> l = null;
-		l = this.plane.findGeoIntersections(ray);
+		l = this.plane.findGeoIntersections(ray,maxDistance);
 		if (l == null)
 			return null;
 
@@ -66,6 +66,7 @@ public class Triangle extends Polygon {
 		double t2 = alignZero(v.dotProduct(N2));
 		double t3 = alignZero(v.dotProduct(N3));
 		if ((t1 > 0 && t2 > 0 && t3 > 0) || (t1 < 0 && t2 < 0 && t3 < 0)) {
+			//if(alignZero(t1-maxDistance) <= 0 && alignZero(t2-maxDistance) <= 0 && alignZero(t3-maxDistance) <= 0) {
 			l.get(0).geometry = this;
 			return l;
 		}

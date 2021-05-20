@@ -19,7 +19,6 @@ public abstract class RayTracerBase {
 	 * @param scene
 	 */
 	public RayTracerBase(Scene scene) {
-		// TODO Auto-generated constructor stub
 		this.scene = scene;
 	}
 

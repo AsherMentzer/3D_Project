@@ -22,18 +22,22 @@ public class SpotLight extends PointLight {
 	double beam = 0;
 
 	/**
-	 * constructor without beam parameter
 	 * 
 	 * @param intensity
 	 * @param position
-	 * @param kC
-	 * @param kL
-	 * @param kQ
 	 * @param direction
 	 */
-	public SpotLight(Color intensity, Point3D position, Vector direction, double kC, double kL, double kQ) {
-		super(intensity, position, kC, kL, kQ);
+	public SpotLight(Color intensity, Point3D position, Vector direction) {
+		super(intensity, position);//, kC, kL, kQ);
 		this.direction = direction.normalize();
+	}
+
+	/**
+	 * @param beam the beam to set
+	 */
+	public SpotLight setBeam(double beam) {
+		this.beam = beam;
+		return this;
 	}
 
 	/**
@@ -47,27 +51,58 @@ public class SpotLight extends PointLight {
 	 * @param direction
 	 * @param beam
 	 */
+	/*
 	public SpotLight(Color intensity, Point3D position, Vector direction, double kC, double kL, double kQ,
 			double beam) {
-		super(intensity, position, kC, kL, kQ);
+		super(intensity, position);//, kC, kL, kQ);
 		this.direction = direction.normalize();
 		this.beam = beam;
+	}*/
+
+	/**
+	 * @param kC the kC to set
+	 */
+	public SpotLight setkC(double kC) {
+		super.setkC(kC);
+		return this;
 	}
 
+
+	/**
+	 * @param kL the kL to set
+	 */
+	public SpotLight setkL(double kL) {
+		super.setkL(kL);
+		return this;
+	}
+
+
+	/**
+	 * @param kQ the kQ to set
+	 */
+	public SpotLight setkQ(double kQ) {
+		super.setkQ(kQ);
+		return this;
+	}
+
+
+	
 	/**
 	 * get the color of the light in specific point Calculate how much fade by the
 	 * distance
 	 */
 	@Override
 	public Color getIntensity(Point3D p) {
-		double s = alignZero(getL(p).dotProduct(direction));
-		if (s > 0) {
+		double cos = alignZero(getL(p).dotProduct(direction));
+		cos=beam==1?cos:Math.pow(cos, beam);
+		cos=cos>0?cos:0;
+		/*if (s > 0) {
 			if (beam == 0)
 				return getIntensity().scale(s);
 			else// calculate the narrow of the beam
 				return getIntensity().scale(Math.pow(s, beam));
-		} else
-			return super.getIntensity().scale(0);
+		} else*/
+			return super.getIntensity(p).scale(cos);
 	}
 
 	/**
@@ -78,4 +113,11 @@ public class SpotLight extends PointLight {
 		return super.getL(p);
 	}
 
+	/**
+	 * 
+	 */
+	@Override
+	public double getDistance(Point3D point) {
+		return super.getDistance(point);
+	}
 }

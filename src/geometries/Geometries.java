@@ -51,13 +51,13 @@ public class Geometries implements Intersectable {
 	 * Function to find all the intersections between the ray to all the shapes
 	 */
 	@Override
-	public List<GeoPoint> findGeoIntersections(Ray ray) {
+	public List<GeoPoint> findGeoIntersections(Ray ray,double maxDistance) {
 		if (intersections.isEmpty())
 			return null;
 		
 		List<GeoPoint> l = new LinkedList<GeoPoint>();
 		for (Intersectable i : intersections) {
-			var geoIntersections = i.findGeoIntersections(ray);
+			var geoIntersections = i.findGeoIntersections(ray,maxDistance);
 			if (geoIntersections != null)
 				l.addAll(geoIntersections);
 		}

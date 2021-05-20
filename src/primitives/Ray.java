@@ -14,6 +14,8 @@ public class Ray {
 	private Point3D p0;
 	private Vector dir;
 
+	private static final double DELTA = 0.1;
+
 	/**
 	 * constructor
 	 * 
@@ -26,6 +28,21 @@ public class Ray {
 			v = v.normalize();
 		p0 = p;
 		dir = v;
+	}
+
+	/**
+	 * constructor to assist to move the new ray to reflection and refraction 
+	 * @param normal the normal vector to this geometry in this point
+	 * @param point the point of intersection
+	 * @param direction the direction of the new ray
+	 */
+	public Ray(Vector normal, Point3D point, Vector direction) {
+		double sign = normal.dotProduct(direction);
+		if (sign >= 0)
+			p0 = point.add(normal.scale(DELTA));
+		else
+			p0 = point.add(normal.scale(-DELTA));
+		dir = direction;
 	}
 
 	/**

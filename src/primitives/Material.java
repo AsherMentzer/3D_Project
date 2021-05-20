@@ -10,13 +10,27 @@ package primitives;
  *
  */
 public class Material {
-	// the diffuse parameter
+	/**
+	 * the diffuse parameter
+	 */
 	public double kD = 0;
-	// the specular parameter
+	/**
+	 *  the specular parameter
+	 */
 	public double kS = 0;
-	// the shininess parameter
+	/**
+	 *  the shininess parameter
+	 */
 	public int nShininess = 0;
-
+	/**
+	 * the transparency parameter
+	 */
+	public double kT=0.0;
+	/**
+	 * the reflection parameter
+	 */
+	public double kR=0.0;
+	
 	/**
 	 * setter
 	 * 
@@ -47,4 +61,22 @@ public class Material {
 		return this;
 	}
 
+	/**
+	 * @param kT the kT to set
+	 */
+	public Material setkT(double kT) {
+		this.kT = kT;
+		return this;
+	}
+
+	/**
+	 * @param kR the kR to set
+	 */
+	public Material setkR(double kR) {
+		this.kR = kR;
+		return this;
+	}
+	
+	
+	
 }

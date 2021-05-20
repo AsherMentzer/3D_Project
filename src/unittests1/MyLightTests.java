@@ -63,18 +63,17 @@ public class MyLightTests {
 	@Test
 	public void sphereSpot() {
 		scene1.geometries.add(sphere);
-		scene1.lights.add(new SpotLight(new Color(500, 300, 0), new Point3D(-50, -50, 50), new Vector(1, 1, -2), 1,
-				0.00001, 0.00000001));
-		scene1.lights.add(new SpotLight(new Color(0, 500, 100), new Point3D(50, 50, 50), new Vector(-1, -1, -2), 1,
-				0.00001, 0.00000001));
-		scene1.lights.add(new SpotLight(new Color(150, 500, 0), new Point3D(-50, 50, 50), new Vector(-1, -1, -2), 1,
-				0.00001, 0.00000001));
+		scene1.lights.add(new SpotLight(new Color(500, 300, 0), new Point3D(-50, -50, 50), new Vector(1, 1, -2))
+				.setkC(1).setkL(0.00001).setkQ(0.00000001));
+		scene1.lights.add(new SpotLight(new Color(0, 500, 100), new Point3D(50, 50, 50), new Vector(-1, -1, -2))
+				.setkC(1).setkL(0.00001).setkQ(0.00000001));
+		scene1.lights.add(new SpotLight(new Color(150, 500, 0), new Point3D(-50, 50, 50), new Vector(-1, -1, -2))
+				.setkC(1).setkL(0.00001).setkQ(0.00000001));
 		
 
 		ImageWriter imageWriter = new ImageWriter("sphere2Spots2", 500, 500);
 		Render render = new Render()//
 				.setImageWriter(imageWriter) //
-				.setScene(scene1) //
 				.setCamera(camera1) //
 				.setRayTracer(new RayTracerBasic(scene1));
 		render.renderImage();

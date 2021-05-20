@@ -21,6 +21,14 @@ public class AmbientLight extends Light  {
 	}
 
 	/**
+	 * default constructor to set the ambient light 
+	 * to black color
+	 */
+	public AmbientLight() {
+		super(Color.BLACK);
+	}
+	
+	/**
 	 * getter
 	 * 
 	 * @return the intensity color
