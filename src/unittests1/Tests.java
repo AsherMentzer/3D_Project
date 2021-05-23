@@ -58,6 +58,7 @@ public class Tests {
 	/**
 	 * Produce a picture of a sphere lighted by a directional light
 	 */
+	/*
 	@Test
 	public void HomeDirectional() {
 		scene1.geometries.add(triangle1,polygon1,polygon2);
@@ -70,6 +71,6 @@ public class Tests {
 				.setRayTracer(new RayTracerBasic(scene1));
 		render.renderImage();
 		render.writeToImage();
-	}
+	}*/
 
 }

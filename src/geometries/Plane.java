@@ -111,7 +111,7 @@ public class Plane extends Geometry {
 		if (t < 0 || isZero(t))
 			return null;
 		
-		if (!(alignZero(t-maxDistance) <= 0))
+		if (!(alignZero(t-maxDistance) < 0))
 			return null;
 		
 		Point3D p = ray.getPoint(t);

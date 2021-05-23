@@ -1,4 +1,4 @@
-package unitestes.primitives;
+package unittests.primitives;
 
 import static org.junit.Assert.*;
 

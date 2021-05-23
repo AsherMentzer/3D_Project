@@ -167,4 +167,9 @@ public class Vector {
 		return head.equals(other.head);
 	}
 
+	@Override
+	public String toString() {
+		return "--->" + head;
+	}
+
 }

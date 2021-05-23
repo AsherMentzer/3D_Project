@@ -122,4 +122,9 @@ public class Color {
 		return new Color(r / k, g / k, b / k);
 	}
 
+	@Override
+	public String toString() {
+		return "[" + r + "," + g + "," + b + "]";
+	}
+
 }

@@ -75,7 +75,7 @@ public class Ray {
 
 	@Override
 	public String toString() {
-		return "Ray [p0=" + p0 + ", dir=" + dir + "]";
+		return "Ray " + p0 + dir + "---";
 	}
 
 	@Override

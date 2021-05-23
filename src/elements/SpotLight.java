@@ -19,7 +19,7 @@ public class SpotLight extends PointLight {
 	// the direction of this spot
 	private Vector direction;
 	// the how narrow the beam will be
-	double beam = 0;
+	double beam = 1;
 
 	/**
 	 * 
@@ -28,8 +28,8 @@ public class SpotLight extends PointLight {
 	 * @param direction
 	 */
 	public SpotLight(Color intensity, Point3D position, Vector direction) {
-		super(intensity, position);//, kC, kL, kQ);
-		this.direction = direction.normalize();
+		super(intensity, position);// , kC, kL, kQ);
+		this.direction = direction.normalized();
 	}
 
 	/**
@@ -52,12 +52,10 @@ public class SpotLight extends PointLight {
 	 * @param beam
 	 */
 	/*
-	public SpotLight(Color intensity, Point3D position, Vector direction, double kC, double kL, double kQ,
-			double beam) {
-		super(intensity, position);//, kC, kL, kQ);
-		this.direction = direction.normalize();
-		this.beam = beam;
-	}*/
+	 * public SpotLight(Color intensity, Point3D position, Vector direction, double
+	 * kC, double kL, double kQ, double beam) { super(intensity, position);//, kC,
+	 * kL, kQ); this.direction = direction.normalize(); this.beam = beam; }
+	 */
 
 	/**
 	 * @param kC the kC to set
@@ -67,7 +65,6 @@ public class SpotLight extends PointLight {
 		return this;
 	}
 
-
 	/**
 	 * @param kL the kL to set
 	 */
@@ -75,7 +72,6 @@ public class SpotLight extends PointLight {
 		super.setkL(kL);
 		return this;
 	}
-
 
 	/**
 	 * @param kQ the kQ to set
@@ -85,8 +81,6 @@ public class SpotLight extends PointLight {
 		return this;
 	}
 
-
-	
 	/**
 	 * get the color of the light in specific point Calculate how much fade by the
 	 * distance
@@ -94,15 +88,11 @@ public class SpotLight extends PointLight {
 	@Override
 	public Color getIntensity(Point3D p) {
 		double cos = alignZero(getL(p).dotProduct(direction));
-		cos=beam==1?cos:Math.pow(cos, beam);
-		cos=cos>0?cos:0;
-		/*if (s > 0) {
-			if (beam == 0)
-				return getIntensity().scale(s);
-			else// calculate the narrow of the beam
-				return getIntensity().scale(Math.pow(s, beam));
-		} else*/
-			return super.getIntensity(p).scale(cos);
+		if (cos <= 0)
+			return Color.BLACK;
+		if (beam != 1)
+			cos = Math.pow(cos, beam);
+		return super.getIntensity(p).scale(cos);
 	}
 
 	/**

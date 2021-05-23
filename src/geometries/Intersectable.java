@@ -40,7 +40,6 @@ public interface Intersectable {
 
 		@Override
 		public boolean equals(Object obj) {
-			// TODO Auto-generated method stub
 			if (this == obj)
 				return true;
 			if (obj == null)
@@ -48,16 +47,13 @@ public interface Intersectable {
 			if (!(obj instanceof GeoPoint))
 				return false;
 			GeoPoint geo = (GeoPoint) obj;
-			if (!(geo.geometry instanceof Plane && geometry instanceof Plane
-					|| geo.geometry instanceof Sphere && geometry instanceof Sphere
-					|| geo.geometry instanceof Tube && geometry instanceof Tube
-					|| geo.geometry instanceof Triangle && geometry instanceof Triangle
-					|| geo.geometry instanceof Cylinder && geometry instanceof Cylinder
-					|| geo.geometry instanceof Polygon && geometry instanceof Polygon))
-				return false;
-			return geo.point.equals(point);
+			return geo.geometry == geometry && geo.point.equals(point);
 		}
-
+		
+		@Override
+		public String toString() {
+			return "" + geometry + ": " + point;
+		}
 	}
 
 	/**
