@@ -1,5 +1,6 @@
 package renderer;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import elements.LightSource;
@@ -29,16 +30,27 @@ public class RayTracerBasic extends RayTracerBase {
 	private static final int MAX_CALC_COLOR_LEVEL = 10;
 	private static final double MIN_CALC_COLOR_K = 0.001;
 	private static final double INITIAL_K = 1.0;
-
+	private int numOfRays;
+	private static final double DISTANCE = 10;
+	
 	/**
 	 * constructor that activate the father constructor
 	 * 
 	 * @param scene Scene
 	 */
 	public RayTracerBasic(Scene scene) {
-		super(scene);
+		this(scene,1);
 	}
 
+	/**
+	 * constructor that activate the father constructor
+	 * 
+	 * @param scene Scene
+	 */
+	public RayTracerBasic(Scene scene,int numOfRays) {
+		super(scene);
+		this.numOfRays=numOfRays;
+	}
 	@Override
 	/**
 	 * get ray and return the color of the closest point that this ray intersect
@@ -202,25 +214,28 @@ public class RayTracerBasic extends RayTracerBase {
 		Color color = Color.BLACK;
 		Material material = geopoint.geometry.getMaterial();
 		Vector n = geopoint.geometry.getNormal(geopoint.point);
-		double kr = material.kR, kkr = k * kr;
+		double kr = material.kR, kkr = k * kr,kg=material.kG;
 		// if is too small stop the recursive
 		if (kkr > MIN_CALC_COLOR_K) {
 			double nl = ray.getDir().dotProduct(n);
 			Vector inRay = ray.getDir().subtract(n.scale(2 * (nl))).normalize();
 			Ray reflectedRay = new Ray(n, geopoint.point, inRay);
-			color = calcGlobalEffect(reflectedRay, level, kr, kkr);
+			color = calcBeamColor(color, n, reflectedRay, level, kr, kkr, kg);
+			//color = calcGlobalEffect(reflectedRay, level, kr, kkr);
 			/*
 			 * GeoPoint reflectedPoint = findClosestIntersection(reflectedRay); if
 			 * (reflectedPoint != null) color = color.add(calcColor(reflectedPoint,
 			 * reflectedRay, level - 1, kkr).scale(kr));
 			 */
 		}
-		double kt = material.kT, kkt = k * kt;
+		double kt = material.kT, kkt = k * kt,kb=material.kB;
 		// if is too small stop the recursive
 		if (kkt > MIN_CALC_COLOR_K) {
 			Vector inRay = ray.getDir();
 			Ray refractedRay = new Ray(n, geopoint.point, inRay);
-			color = color.add(calcGlobalEffect(refractedRay, level, kt, kkt));
+			color = calcBeamColor(color, n, refractedRay, level, kt, kkt, kb);
+			//color = color.add(calcGlobalEffect(refractedRay, level, kt, kkt));
+			
 			/*
 			 * GeoPoint refractedPoint = findClosestIntersection(refractedRay); if
 			 * (refractedPoint != null) color = color.add(calcColor(refractedPoint,
@@ -254,7 +269,6 @@ public class RayTracerBasic extends RayTracerBase {
 			return 1.0;
 		double ktr = 1.0;
 		for (GeoPoint gp : intersections) {
-			// if (alignZero(gp.point.distance(geopoint.point) - lightDistance) <= 0) {
 			ktr *= gp.geometry.getMaterial().kT;
 			if (ktr < MIN_CALC_COLOR_K)
 				return 0.0;
@@ -263,4 +277,53 @@ public class RayTracerBasic extends RayTracerBase {
 		return ktr;
 	}
 
+	/**
+	 * this function calculate the color of point with the help of beam
+	 * 
+	 * @param color  the color of the intersection point
+	 * @param n      The normal vector of the point where beam start
+	 * @param refRay reflected/refracted ray
+	 * @param level  The level of recursion
+	 * @param k      kt/kr
+	 * @param kk     kkt/kkr
+	 * @param rad    radius/kMatte ,when radius is bigger the mattiut is more
+	 *               intense
+	 * @return The color
+	 */
+	private Color calcBeamColor(Color color, Vector n, Ray refRay, int level, double k, double kk, double rad) {
+		Color addColor = Color.BLACK;
+		List<Ray> rays = refRay.generateBeam(n, rad, DISTANCE, numOfRays);
+		for (Ray ray : rays) {
+			GeoPoint refPoint = findClosestIntersection(ray);
+			if (refPoint != null) {
+				addColor = addColor.add(calcColor(refPoint, ray, level - 1, kk).scale(k));
+			}
+		}
+		int size = rays.size();
+		color = color.add(size > 1 ? addColor.reduce(size) : addColor);
+		return color;
+	}
+	
+	/*
+	public Ray constructRayThroughPixel(Point3D p0,Vector vRight,Vector vUp,int nX, int nY, int j, int i) {
+		// the center of the view plane
+		Point3D pc = p0.add(vTo.scale(distance));
+		double height=2.0;
+		double width=2.0;
+		double rY = height / nY; // Ratio of height to rows
+		double rX = width / nX; // Ratio of width and columns
+		double ny = nY;
+		double nx = nX;
+		double yI = -((i - (ny - 1) / 2) * rY);
+		double xJ = (j - (nx - 1) / 2) * rX;
+		Point3D pIJ = pc;
+		if (xJ != 0)
+			pIJ = pIJ.add(vRight.scale(xJ));
+		if (yI != 0)
+			pIJ = pIJ.add(vUp.scale(yI));
+		Vector vIJ = pIJ.subtract(p0);
+		return new Ray(p0, vIJ);
+	}
+
+*/
 }

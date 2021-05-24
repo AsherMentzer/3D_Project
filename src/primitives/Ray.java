@@ -2,9 +2,11 @@ package primitives;
 
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 import geometries.Intersectable.GeoPoint;
+import static primitives.Util.*;
 
 /**
  * base class to rpresent ray by Point and normal vector of the direction
@@ -31,9 +33,10 @@ public class Ray {
 	}
 
 	/**
-	 * constructor to assist to move the new ray to reflection and refraction 
-	 * @param normal the normal vector to this geometry in this point
-	 * @param point the point of intersection
+	 * constructor to assist to move the new ray to reflection and refraction
+	 * 
+	 * @param normal    the normal vector to this geometry in this point
+	 * @param point     the point of intersection
 	 * @param direction the direction of the new ray
 	 */
 	public Ray(Vector normal, Point3D point, Vector direction) {
@@ -70,7 +73,14 @@ public class Ray {
 	 * @return the point on the ray where v scale by t
 	 */
 	public Point3D getPoint(double t) {
-		return p0.add(dir.scale(t));
+		if (Util.isZero(t))
+			return p0;
+		
+		try {
+			return p0.add(dir.scale(t));
+		} catch (IllegalArgumentException e) {
+			return p0;
+		}
 	}
 
 	@Override
@@ -133,6 +143,46 @@ public class Ray {
 			}
 			return point;
 		}
-
+	}
+	
+	/**
+	 * this function generate beam of rays when radius is bigger our beam spread on
+	 * more area
+	 * 
+	 * @param n         normal vector of the point where beam start
+	 * @param radius    radius of virtual circle
+	 * @param distance  Distance between The intersection point to the virtual circle
+	 * @param numOfRays The number of the rays of the beam
+	 * @return beam of rays
+	 */
+	public List<Ray> generateBeam(Vector n, double radius, double distance, int numOfRays) {
+		List<Ray> rays = new LinkedList<Ray>();
+		rays.add(this);// Including the main ray
+		if (numOfRays == 1 || isZero(radius))// The component (glossy surface /diffuse glass) is turned off
+			return rays;
+		Vector nX = dir.createNormal();
+		Vector nY = dir.crossProduct(nX);
+		Point3D centerCircle = this.getPoint(distance);
+		Point3D randomPoint;
+		double x, y, d;
+		double nv = alignZero(n.dotProduct(dir));
+		for (int i = 1; i < numOfRays; ++i) {
+			x = random(-1, 1);
+			y = Math.sqrt(1 - x * x);
+			d = random(-radius, radius);
+			x = alignZero(x * d);
+			y = alignZero(y * d);
+			randomPoint = centerCircle;
+			if (x != 0)
+				randomPoint = randomPoint.add(nX.scale(x));
+			if (y != 0)
+				randomPoint = randomPoint.add(nY.scale(y));
+			Vector tPoint = randomPoint.subtract(p0);
+			double nt = alignZero(n.dotProduct(tPoint));
+			if (nv * nt > 0) {
+				rays.add(new Ray(p0, tPoint));
+			}
+		}
+		return rays;
 	}
 }

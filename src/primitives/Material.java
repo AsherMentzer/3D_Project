@@ -32,9 +32,19 @@ public class Material {
 	public double kR=0.0;
 	
 	/**
+	 * the Blurry glass parameter
+	 */
+	public double kB=0.0;
+	
+	/**
+	 * the Glossy glass parameter
+	 */
+	public double kG=0.0;
+	
+	/**
 	 * setter
 	 * 
-	 * @param kD the kD to set
+	 * @param kD the diffuse parameter to set
 	 */
 	public Material setkD(double kD) {
 		this.kD = kD;
@@ -44,7 +54,7 @@ public class Material {
 	/**
 	 * setter
 	 * 
-	 * @param kS the kS to set
+	 * @param kS the specular parameter to set
 	 */
 	public Material setkS(double kS) {
 		this.kS = kS;
@@ -54,7 +64,7 @@ public class Material {
 	/**
 	 * setter
 	 * 
-	 * @param nSininess the nSininess to set
+	 * @param nSininess the shininess parameter to set
 	 */
 	public Material setnShininess(int nSininess) {
 		this.nShininess = nSininess;
@@ -62,7 +72,7 @@ public class Material {
 	}
 
 	/**
-	 * @param kT the kT to set
+	 * @param kT the transparency parameter to set
 	 */
 	public Material setkT(double kT) {
 		this.kT = kT;
@@ -70,13 +80,31 @@ public class Material {
 	}
 
 	/**
-	 * @param kR the kR to set
+	 * @param kR the reflection parameter to set
 	 */
 	public Material setkR(double kR) {
 		this.kR = kR;
 		return this;
 	}
 	
+	/**
+	 * setter
+	 * @param kB the Blurry glass parameter
+	 * @return the material
+	 */
+	public Material setkB(double kB) {
+		this.kB=kB;
+		return this;
+	}
 	
+	/**
+	 * setter
+	 * @param kG the Glossy glass parameter
+	 * @return the material
+	 */
+	public Material setkG(double kG) {
+		this.kG=kG;
+		return this;
+	}
 	
 }
