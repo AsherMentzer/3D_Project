@@ -222,29 +222,27 @@ public class RayTracerBasic extends RayTracerBase {
 			Ray reflectedRay = new Ray(n, geopoint.point, inRay);
 			color = calcBeamColor(color, n, reflectedRay, level, kr, kkr, kg);
 			//color = calcGlobalEffect(reflectedRay, level, kr, kkr);
-			/*
-			 * GeoPoint reflectedPoint = findClosestIntersection(reflectedRay); if
-			 * (reflectedPoint != null) color = color.add(calcColor(reflectedPoint,
-			 * reflectedRay, level - 1, kkr).scale(kr));
-			 */
-		}
+	}
 		double kt = material.kT, kkt = k * kt,kb=material.kB;
 		// if is too small stop the recursive
 		if (kkt > MIN_CALC_COLOR_K) {
 			Vector inRay = ray.getDir();
 			Ray refractedRay = new Ray(n, geopoint.point, inRay);
 			color = calcBeamColor(color, n, refractedRay, level, kt, kkt, kb);
-			//color = color.add(calcGlobalEffect(refractedRay, level, kt, kkt));
-			
-			/*
-			 * GeoPoint refractedPoint = findClosestIntersection(refractedRay); if
-			 * (refractedPoint != null) color = color.add(calcColor(refractedPoint,
-			 * refractedRay, level - 1, kkt).scale(kt));
-			 */
+			//color = color.add(calcGlobalEffect(refractedRay, level, kt, kkt));		
 		}
 		return color;
 	}
 
+	/**
+	 * function to help calculate the recursion for the color
+	 * for the reflectedRay and refractedRay ray 
+	 * @param ray 
+	 * @param level how many times to do the recursion 
+	 * @param kx the parameter for scale the color kt/kr
+	 * @param kkx the kkt/kkr for the next intersected geometry
+	 * @return the result of the calculation
+	 */
 	private Color calcGlobalEffect(Ray ray, int level, double kx, double kkx) {
 		GeoPoint gp = findClosestIntersection(ray);
 		return (gp == null ? scene.background : calcColor(gp, ray, level - 1, kkx)).scale(kx);
@@ -300,30 +298,8 @@ public class RayTracerBasic extends RayTracerBase {
 			}
 		}
 		int size = rays.size();
+		//calculate the color by average of all the beam
 		color = color.add(size > 1 ? addColor.reduce(size) : addColor);
 		return color;
 	}
-	
-	/*
-	public Ray constructRayThroughPixel(Point3D p0,Vector vRight,Vector vUp,int nX, int nY, int j, int i) {
-		// the center of the view plane
-		Point3D pc = p0.add(vTo.scale(distance));
-		double height=2.0;
-		double width=2.0;
-		double rY = height / nY; // Ratio of height to rows
-		double rX = width / nX; // Ratio of width and columns
-		double ny = nY;
-		double nx = nX;
-		double yI = -((i - (ny - 1) / 2) * rY);
-		double xJ = (j - (nx - 1) / 2) * rX;
-		Point3D pIJ = pc;
-		if (xJ != 0)
-			pIJ = pIJ.add(vRight.scale(xJ));
-		if (yI != 0)
-			pIJ = pIJ.add(vUp.scale(yI));
-		Vector vIJ = pIJ.subtract(p0);
-		return new Ray(p0, vIJ);
-	}
-
-*/
 }
