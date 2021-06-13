@@ -36,41 +36,48 @@ public class Triangle extends Polygon {
 	 * triangle
 	 */
 	public List<GeoPoint> findGeoIntersections(Ray ray,double maxDistance) {
-		Point3D p0 = ray.getP0();
-		Vector v = ray.getDir();
-
-		List<GeoPoint> l = null;
-		l = this.plane.findGeoIntersections(ray,maxDistance);
-		if (l == null)
-			return null;
-
-		// all the vectors from the p0 of the ray
-		// to all the points of the edges of the polygon
-		Vector v1 = this.vertices.get(0).subtract(p0);
-		Vector v2 = this.vertices.get(1).subtract(p0);
-		Vector v3 = this.vertices.get(2).subtract(p0);
-
-		// all the vectors that normals to each
-		// triangle that created from the vectors
-		Vector N1 = v1.crossProduct(v2);
-		Vector N2 = v2.crossProduct(v3);
-		Vector N3 = v3.crossProduct(v1);
-
-		/*
-		 * all the double t of dot product between the vector v of the ray and each
-		 * normal vector we found if all the t doubles have the same sign so the point
-		 * is in the polygon else is out or if 1t is 0 is on vertices or if 2 are 0 is
-		 * in edge
-		 */
-		double t1 = alignZero(v.dotProduct(N1));
-		double t2 = alignZero(v.dotProduct(N2));
-		double t3 = alignZero(v.dotProduct(N3));
-		if ((t1 > 0 && t2 > 0 && t3 > 0) || (t1 < 0 && t2 < 0 && t3 < 0)) {
-			//if(alignZero(t1-maxDistance) <= 0 && alignZero(t2-maxDistance) <= 0 && alignZero(t3-maxDistance) <= 0) {
-			l.get(0).geometry = this;
-			return l;
-		}
-		return null;
+		// Using in findIntersections of polygon
+				List<GeoPoint> intersections = super.findGeoIntersections(ray,maxDistance);
+				if (intersections == null)
+					return null;
+				intersections.get(0).geometry = this;
+				return intersections;	
 	}
+//		Point3D p0 = ray.getP0();
+//		Vector v = ray.getDir();
+//
+//		List<GeoPoint> l = null;
+//		l = this.plane.findGeoIntersections(ray,maxDistance);
+//		if (l == null)
+//			return null;
+//
+//		// all the vectors from the p0 of the ray
+//		// to all the points of the edges of the polygon
+//		Vector v1 = this.vertices.get(0).subtract(p0);
+//		Vector v2 = this.vertices.get(1).subtract(p0);
+//		Vector v3 = this.vertices.get(2).subtract(p0);
+//
+//		// all the vectors that normals to each
+//		// triangle that created from the vectors
+//		Vector N1 = v1.crossProduct(v2);
+//		Vector N2 = v2.crossProduct(v3);
+//		Vector N3 = v3.crossProduct(v1);
+//
+//		/*
+//		 * all the double t of dot product between the vector v of the ray and each
+//		 * normal vector we found if all the t doubles have the same sign so the point
+//		 * is in the polygon else is out or if 1t is 0 is on vertices or if 2 are 0 is
+//		 * in edge
+//		 */
+//		double t1 = alignZero(v.dotProduct(N1));
+//		double t2 = alignZero(v.dotProduct(N2));
+//		double t3 = alignZero(v.dotProduct(N3));
+//		if ((t1 > 0 && t2 > 0 && t3 > 0) || (t1 < 0 && t2 < 0 && t3 < 0)) {
+//			//if(alignZero(t1-maxDistance) <= 0 && alignZero(t2-maxDistance) <= 0 && alignZero(t3-maxDistance) <= 0) {
+//			l.get(0).geometry = this;
+//			return l;
+//		}
+//		return null;
+//	}
 
 }

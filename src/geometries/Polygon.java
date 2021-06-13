@@ -15,6 +15,7 @@ import static primitives.Util.*;
  * @author Dan
  */
 public class Polygon extends Geometry {
+	private static final double DELTA = 0.1;
 	/**
 	 * List of polygon's vertices
 	 */
@@ -53,9 +54,11 @@ public class Polygon extends Geometry {
 		// polygon with this plane.
 		// The plane holds the invariant normal (orthogonal unit) vector to the polygon
 		plane = new Plane(vertices[0], vertices[1], vertices[2]);
-		if (vertices.length == 3)
+		if (vertices.length == 3) {
+			setMinCoordinates();
+		    setMaxCoordinates();
 			return; // no need for more tests for a Triangle
-
+		}
 		Vector n = plane.getNormal();
 
 		// Subtracting any subsequent points will throw an IllegalArgumentException
@@ -83,6 +86,8 @@ public class Polygon extends Geometry {
 			if (positive != (edge1.crossProduct(edge2).dotProduct(n) > 0))
 				throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
 		}
+		setMinCoordinates();
+		setMaxCoordinates();
 	}
 
 	/**
@@ -158,4 +163,84 @@ public class Polygon extends Geometry {
 		l.get(0).geometry = this;
 		return l;
 	}
+
+	/*@Override
+	public Point3D getMinCoordinates() {
+		double minX = Double.POSITIVE_INFINITY;
+		double minY = Double.POSITIVE_INFINITY;
+		double minZ = Double.POSITIVE_INFINITY;
+		double x, y, z;
+		for (Point3D p : vertices) {
+			x = p.getX();
+			y = p.getY();
+			z = p.getZ();
+			if (x < minX)
+				minX = x;
+			if (y < minY)
+				minY = y;
+			if (z < minZ)
+				minZ = z;
+		}
+		return  new Point3D(minX - DELTA, minY - DELTA, minZ - DELTA);
+	}
+
+	@Override
+	public Point3D getMaxCoordinates() {
+		double maxX = Double.NEGATIVE_INFINITY;
+		double maxY = Double.NEGATIVE_INFINITY;
+		double maxZ = Double.NEGATIVE_INFINITY;
+		double x, y, z;
+		for (Point3D p : vertices) {
+			x = p.getX();
+			y = p.getY();
+			z = p.getZ();
+			if (x > maxX)
+				maxX = x;
+			if (y > maxY)
+				maxY = y;
+			if (z > maxZ)
+				maxZ = z;
+		}
+		return new Point3D(maxX + DELTA, maxY + DELTA, maxZ + DELTA);
+	}*/
+	@Override
+	public void setMinCoordinates() {
+		double minX = Double.POSITIVE_INFINITY;
+		double minY = Double.POSITIVE_INFINITY;
+		double minZ = Double.POSITIVE_INFINITY;
+		double x, y, z;
+		for (Point3D p : vertices) {
+			x = p.getX();
+			y = p.getY();
+			z = p.getZ();
+			if (x < minX)
+				minX = x;
+			if (y < minY)
+				minY = y;
+			if (z < minZ)
+				minZ = z;
+		}
+		_minBoundary = new Point3D(minX - DELTA, minY - DELTA, minZ - DELTA);
+	}
+
+	@Override
+	public void setMaxCoordinates() {
+		double maxX = Double.NEGATIVE_INFINITY;
+		double maxY = Double.NEGATIVE_INFINITY;
+		double maxZ = Double.NEGATIVE_INFINITY;
+		double x, y, z;
+		for (Point3D p : vertices) {
+			x = p.getX();
+			y = p.getY();
+			z = p.getZ();
+			if (x > maxX)
+				maxX = x;
+			if (y > maxY)
+				maxY = y;
+			if (z > maxZ)
+				maxZ = z;
+		}
+		_maxBoundary = new Point3D(maxX + DELTA, maxY + DELTA, maxZ + DELTA);
+	}
+	
 }

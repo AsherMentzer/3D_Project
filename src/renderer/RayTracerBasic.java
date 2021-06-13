@@ -51,6 +51,17 @@ public class RayTracerBasic extends RayTracerBase {
 		super(scene);
 		this.numOfRays=numOfRays;
 	}
+	/**
+	 * set the box for rendering acceleration
+	 * @param lambda
+	 * @return this
+	 */
+		public RayTracerBasic setBox(int lambda) {
+			if (lambda < 0)
+				throw new IllegalArgumentException("Box Density can't be a nagitve number\n");
+			scene.setBox(lambda);
+			return this;
+		}
 	@Override
 	/**
 	 * get ray and return the color of the closest point that this ray intersect
@@ -68,10 +79,27 @@ public class RayTracerBasic extends RayTracerBase {
 	 * @return the closest geo point
 	 */
 	private GeoPoint findClosestIntersection(Ray ray) {
-		List<GeoPoint> intersections = scene.geometries.findGeoIntersections(ray);
+		List<GeoPoint> releventPoint = scene.geometries
+				.findRelevantIntersections(ray, scene.getBox(), false,Double.POSITIVE_INFINITY);
+		if (releventPoint == null) {
+			return null;
+		}
+		Point3D head = ray.getP0();
+		double distance, minDistance = Double.MAX_VALUE;
+		GeoPoint pointToReturn = null;
+		for (GeoPoint gPoint : releventPoint) {
+			distance = head.distance(gPoint.point);
+			if (distance < minDistance) {
+				// A point with smaller distance to Camera was found
+				minDistance = distance;
+				pointToReturn = gPoint;
+			}
+		}
+		return pointToReturn;
+		/*List<GeoPoint> intersections = scene.geometries.findGeoIntersections(ray);
 		if (intersections == null)
 			return null;
-		return ray.getClosestGeoPoint(intersections);
+		return ray.getClosestGeoPoint(intersections);*/
 	}
 
 	/**

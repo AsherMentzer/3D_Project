@@ -32,6 +32,8 @@ public class Tube extends Geometry {
 		super();
 		this.axisRay = axisRay;
 		this.radius = radius;
+		setMinCoordinates();
+		setMaxCoordinates();
 	}
 
 	/**
@@ -86,7 +88,6 @@ public class Tube extends Geometry {
 		double x = Double.NEGATIVE_INFINITY, y = x, z = y;
 		_minBoundary = new Point3D(x, y, z);
 	}
-
 	@Override
 	public void setMaxCoordinates() {
 		double x = Double.POSITIVE_INFINITY, y = x, z = y;
@@ -172,5 +173,16 @@ public class Tube extends Geometry {
 		}
 		return null;
 	}
-}
 
+	@Override
+	public void setMinCoordinates() {
+		double x = Double.NEGATIVE_INFINITY, y = x, z = y;
+		_minBoundary = new Point3D(x, y, z);
+	}
+
+	@Override
+	public void setMaxCoordinates() {
+		double x = Double.POSITIVE_INFINITY, y = x, z = y;
+		_maxBoundary = new Point3D(x, y, z);
+	}
+}

@@ -22,6 +22,7 @@ public class Scene {
 	public Color background = Color.BLACK;
 	public AmbientLight ambientLight=new AmbientLight();
 	public Geometries geometries;
+	private Box box;
 	public List<LightSource> lights= new LinkedList<LightSource>();
 	
 	/**
@@ -79,5 +80,27 @@ public class Scene {
 		return this;
 	}
 	
+	/**
+	 * getter of box scene
+	 * 
+	 * @return box
+	 */
+	public Box getBox() {
+		return box;
+	}
+
+	
+	
+	/**
+	 * setter of box
+	 * 
+	 * @param lambda for calculating density
+	 * @return this
+	 */
+
+	public Scene setBox(int lambda) {
+		box = new Box(lambda, geometries);
+		return this;
+	}
 	
 }

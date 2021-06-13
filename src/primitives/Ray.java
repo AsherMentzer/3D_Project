@@ -174,7 +174,7 @@ public class Ray {
 		// the number of rows and columns
 		int nYX = (int) Math.sqrt(numOfRays);
 		// the height and width of the virtual grid
-		double r = (radius * 2) / nYX;
+		double r = (radius * 2)/ nYX;
 		// the radius for each circle for each point in the grid
 		double rad = radius / nYX;
 

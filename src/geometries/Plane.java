@@ -32,6 +32,8 @@ public class Plane extends Geometry {
 		super();
 		this.p0 = p0;
 		this.normal = normal;
+		setMinCoordinates();
+		setMaxCoordinates();
 	}
 
 	/**
@@ -55,6 +57,8 @@ public class Plane extends Geometry {
 			throw new IllegalArgumentException("the points are on the same line");
 
 		this.normal = v1.crossProduct(v2).normalize();
+		setMinCoordinates();
+		setMaxCoordinates();
 	}
 
 	/**
@@ -84,7 +88,6 @@ public class Plane extends Geometry {
 	 * implement the interface to find the normal to this plane by specific point
 	 */
 	public Vector getNormal(Point3D p) {
-		// TODO Auto-generated method stub
 		return this.normal;
 	}
 
@@ -116,5 +119,29 @@ public class Plane extends Geometry {
 		
 		Point3D p = ray.getPoint(t);
 		return List.of(new GeoPoint(this,p));
+	}
+
+	/*@Override
+	public Point3D getMinCoordinates() {
+		double x = Double.NEGATIVE_INFINITY, y = x, z = y;
+		return new Point3D(x,y,z);
+	}
+
+	@Override
+	public Point3D getMaxCoordinates() {
+		double x = Double.POSITIVE_INFINITY, y = x, z = y;
+		return new Point3D(x,y,z);
+	}*/
+
+	@Override
+	public void setMinCoordinates() {
+		double x = Double.NEGATIVE_INFINITY, y = x, z = y;
+		_minBoundary = new Point3D(x, y, z);
+	}
+
+	@Override
+	public void setMaxCoordinates() {
+		double x = Double.POSITIVE_INFINITY, y = x, z = y;
+		_maxBoundary = new Point3D(x, y, z);
 	}
 }
